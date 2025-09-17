@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block header_title %}Settings{% endblock %}
+{% block header_subtitle %}Manage your account, preferences, and security{% endblock %}
+
+{% block content %}
+<!-- 1. Account Settings -->
+<section class="panel">
+    <h2>👤 Account Settings</h2>
+    
+    <div class="settings-section">
+        <h3>Profile Information</h3>
+        <form class="settings-form">
+            <div class="form-row">
+                <label>
+                    <span>Full Name</span>
+                    <input type="text" value="{{ user.name }}" placeholder="Enter your full name">
+                </label>
+                <label>
+                    <span>Email Address</span>
+                    <input type="email" value="chetan@example.com" placeholder="Enter your email">
+                </label>
+            </div>
+            <div class="form-row">
+                <label>
+                    <span>Phone Number</span>
+                    <input type="tel" value="+1 (555) 123-4567" placeholder="Enter your phone number">
+                </label>
+                <label class="profile-pic-upload">
+                    <span>Profile Picture</span>
+                    <div class="pic-upload-area">
+                        <img src="{{ user.profile_pic }}" alt="Current profile" class="current-pic">
+                        <div class="upload-overlay">
+                            <i class="fas fa-camera"></i>
+                            <span>Change Photo</span>
+                        </div>
+                        <input type="file" accept="image/*" style="display: none;">
+                    </div>
+                </label>
+            </div>
+            <button type="submit" class="btn-save">Save Changes</button>
+        </form>
+    </div>
+
+    <div class="settings-section">
+        <h3>🔑 Login & Security</h3>
+        <div class="security-options">
+            <div class="security-item">
+                <div>
+                    <strong>Change Password</strong>
+                    <p>Update your account password</p>
+                </div>
+                <button class="btn-secondary">Change</button>
+            </div>
+            <div class="security-item">
+                <div>
+                    <strong>Two-Factor Authentication</strong>
+                    <p>Add an extra layer of security</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <h3>📧 Email & Notification Preferences</h3>
+        <div class="notification-options">
+            <label class="checkbox-item">
+                <input type="checkbox" checked>
+                <span>Email notifications</span>
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox">
+                <span>SMS notifications</span>
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" checked>
+                <span>WhatsApp notifications</span>
+            </label>
+        </div>
+    </div>
+</section>
+
+<!-- 2. Booking & Payments -->
+<section class="panel">
+    <h2>🎟 Booking & Payments</h2>
+    
+    <div class="settings-section">
+        <h3>💳 Saved Payment Methods</h3>
+        <div class="payment-methods">
+            <div class="payment-card">
+                <i class="fas fa-credit-card"></i>
+                <div>
+                    <strong>**** **** **** 1234</strong>
+                    <p>Visa • Expires 12/25</p>
+                </div>
+                <button class="btn-danger">Remove</button>
+            </div>
+            <button class="btn-add">+ Add Payment Method</button>
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <h3>📄 Payment History</h3>
+        <p>View all your past transactions and download receipts.</p>
+        <button class="btn-secondary">View Payment History</button>
+    </div>
+
+    <div class="settings-section">
+        <h3>⚡ Refund & Cancellation Requests</h3>
+        <p>Manage your refund requests and cancellation history.</p>
+        <button class="btn-secondary">View Requests</button>
+    </div>
+</section>
+
+<!-- 3. Event Preferences -->
+<section class="panel">
+    <h2>🎭 Event Preferences</h2>
+    
+    <div class="settings-section">
+        <h3>📍 Preferred Locations</h3>
+        <div class="location-tags">
+            <span class="tag">New York <i class="fas fa-times"></i></span>
+            <span class="tag">Los Angeles <i class="fas fa-times"></i></span>
+            <span class="tag">Chicago <i class="fas fa-times"></i></span>
+            <button class="btn-add-tag">+ Add Location</button>
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <h3>Event Categories</h3>
+        <div class="category-grid">
+            <label class="checkbox-item">
+                <input type="checkbox" checked>
+                <span>🎵 Music & Concerts</span>
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" checked>
+                <span>🏀 Sports</span>
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox">
+                <span>💼 Conferences</span>
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" checked>
+                <span>🎭 Entertainment</span>
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox">
+                <span>🎓 Workshops</span>
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" checked>
+                <span>🎪 Festivals</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <h3>💰 Budget Preferences</h3>
+        <div class="budget-range">
+            <label>
+                <span>Price Range</span>
+                <div class="range-slider">
+                    <input type="range" min="0" max="1000" value="100" class="range-input">
+                    <span class="range-value">₹0 - ₹10,000</span>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <h3>🔔 Notification Alerts</h3>
+        <label class="checkbox-item">
+            <input type="checkbox" checked>
+            <span>Notify me when concerts are announced in my city</span>
+        </label>
+        <label class="checkbox-item">
+            <input type="checkbox">
+            <span>Alert me about events in my budget range</span>
+        </label>
+    </div>
+</section>
+
+<!-- 4. Privacy & Security -->
+<section class="panel">
+    <h2>🛡 Privacy & Security</h2>
+    
+    <div class="settings-section">
+        <h3>Manage Data Sharing</h3>
+        <div class="privacy-options">
+            <label class="checkbox-item">
+                <input type="checkbox" checked>
+                <span>Share my profile with event organizers</span>
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox">
+                <span>Allow organizers to contact me directly</span>
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" checked>
+                <span>Show my attendance at public events</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <h3>🚫 Blocked Users/Organizers</h3>
+        <p>Manage blocked accounts and unwanted contacts.</p>
+        <button class="btn-secondary">Manage Blocked Accounts</button>
+    </div>
+
+    <div class="settings-section">
+        <h3>📲 Login Devices</h3>
+        <div class="device-list">
+            <div class="device-item">
+                <i class="fas fa-desktop"></i>
+                <div>
+                    <strong>Windows PC - Chrome</strong>
+                    <p>Current session • New York, NY</p>
+                </div>
+                <span class="current-device">Current</span>
+            </div>
+            <div class="device-item">
+                <i class="fas fa-mobile-alt"></i>
+                <div>
+                    <strong>iPhone - Safari</strong>
+                    <p>Last active 2 hours ago • New York, NY</p>
+                </div>
+                <button class="btn-danger">Logout</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5. Language & Accessibility -->
+<section class="panel">
+    <h2>🌐 Language & Accessibility</h2>
+    
+    <div class="settings-section">
+        <h3>Language Selection</h3>
+        <label>
+            <span>Preferred Language</span>
+            <select>
+                <option value="en" selected>English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="hi">हिन्दी</option>
+            </select>
+        </label>
+    </div>
+
+    <div class="settings-section">
+        <h3>🕶 Display Mode</h3>
+        <div class="theme-options">
+            <label class="radio-item">
+                <input type="radio" name="theme" value="light" checked>
+                <span>Light Mode</span>
+            </label>
+            <label class="radio-item">
+                <input type="radio" name="theme" value="dark">
+                <span>Dark Mode</span>
+            </label>
+            <label class="radio-item">
+                <input type="radio" name="theme" value="auto">
+                <span>Auto (System)</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <h3>♿ Accessibility Options</h3>
+        <div class="accessibility-options">
+            <label>
+                <span>Text Size</span>
+                <select>
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option>
+                    <option value="extra-large">Extra Large</option>
+                </select>
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox">
+                <span>High contrast mode</span>
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox">
+                <span>Screen reader support</span>
+            </label>
+        </div>
+    </div>
+</section>
+
+<!-- 6. Support & Legal -->
+<section class="panel">
+    <h2>📜 Support & Legal</h2>
+    
+    <div class="settings-section">
+        <h3>Quick Access</h3>
+        <div class="legal-links">
+            <a href="#" class="legal-link">
+                <i class="fas fa-file-contract"></i>
+                <span>Terms & Conditions</span>
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+            <a href="#" class="legal-link">
+                <i class="fas fa-shield-alt"></i>
+                <span>Privacy Policy</span>
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+            <a href="{{ url_for('help_support') }}" class="legal-link">
+                <i class="fas fa-question-circle"></i>
+                <span>Help & Support</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- 7. Logout -->
+<section class="panel logout-section">
+    <h2>🚪 Account Actions</h2>
+    <div class="logout-actions">
+        <button class="btn-logout">
+            <i class="fas fa-sign-out-alt"></i>
+            Sign Out
+        </button>
+        <p class="logout-warning">This will securely end your current session.</p>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Profile picture upload
+    document.querySelector('.pic-upload-area').addEventListener('click', function() {
+        this.querySelector('input[type="file"]').click();
+    });
+
+    // Range slider value display
+    const rangeInput = document.querySelector('.range-input');
+    const rangeValue = document.querySelector('.range-value');
+    if (rangeInput && rangeValue) {
+        rangeInput.addEventListener('input', function() {
+            rangeValue.textContent = `₹0 - ₹${(this.value * 100).toLocaleString()}`;
+        });
+    }
+
+    // Theme switching (placeholder)
+    document.querySelectorAll('input[name="theme"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            console.log('Theme changed to:', this.value);
+            // Add theme switching logic here
+        });
+    });
+</script>
+{% endblock %}

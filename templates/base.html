@@ -18,8 +18,8 @@
                 <li class="{{ 'active' if request.path == url_for('wishlist') else '' }}"><a href="{{ url_for('wishlist') }}"><i class="fas fa-heart"></i> Wishlist</a></li>
                 <li class="{{ 'active' if request.path == url_for('wallet') else '' }}"><a href="{{ url_for('wallet') }}"><i class="fas fa-wallet"></i> Wallet/Rewards</a></li>
                 <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
-                <li><a href="#"><i class="fas fa-question-circle"></i> Help & Support</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li class="{{ 'active' if request.path == url_for('help_support') else '' }}"><a href="{{ url_for('help_support') }}"><i class="fas fa-question-circle"></i> Help & Support</a></li>
+                <li class="{{ 'active' if request.path == url_for('settings') else '' }}"><a href="{{ url_for('settings') }}"><i class="fas fa-cog"></i> Settings</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </aside>
@@ -34,7 +34,12 @@
                 </div>
                 <div class="top-nav-actions">
                     <i class="fas fa-search"></i>
-                    <i class="fas fa-bell"></i>
+                    <div class="notif" id="notifBell" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bell"></i>
+                        <div class="notif-dropdown">
+                            <p class="notif-empty">There are no notifications</p>
+                        </div>
+                    </div>
                     <img src="{{ user.profile_pic }}" alt="Profile" class="top-nav-profile-pic">
                 </div>
             </header>
@@ -46,5 +51,32 @@
         </div>
     </div>
     {% block scripts %}{% endblock %}
+    <script>
+        (function() {
+            const notif = document.getElementById('notifBell');
+            if (!notif) return;
+            function closeDropdown() {
+                notif.classList.remove('open');
+                notif.setAttribute('aria-expanded', 'false');
+            }
+            notif.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isOpen = notif.classList.toggle('open');
+                notif.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+            document.addEventListener('click', function() {
+                closeDropdown();
+            });
+            notif.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeDropdown();
+                    notif.blur();
+                } else if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    notif.click();
+                }
+            });
+        })();
+    </script>
 </body>
 </html>

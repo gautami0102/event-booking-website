@@ -10,6 +10,7 @@
     <div class="history-list">
         {% for booking in bookings %}
         <div class="history-card">
+            <img class="history-thumb" src="{{ booking.banner_image or 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=500&q=80' }}" alt="{{ booking.name }}">
             <div class="history-details">
                 <h3>{{ booking.name }}</h3>
                 <p><i class="fas fa-calendar-alt"></i> {{ booking.date }}</p>

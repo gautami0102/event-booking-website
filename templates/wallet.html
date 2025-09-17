@@ -12,7 +12,7 @@
         <i class="fas fa-wallet"></i>
         <div class="summary-info">
             <p>Wallet Balance</p>
-            <span>${{ '%.2f'|format(wallet.balance) }}</span>
+            <span>₹{{ '{:,.2f}'.format(wallet.balance) }}</span>
         </div>
     </div>
     <div class="summary-card">

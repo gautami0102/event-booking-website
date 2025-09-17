@@ -29,27 +29,29 @@
 <!-- Recommended Events Panel -->
 <section class="panel recommended-events-panel">
     <h2>Recommended & Trending</h2>
-    <div class="rec-tabs">
-        {% for category in recommended_events.keys() %}
-        <button class="rec-tab-button {% if loop.first %}active{% endif %}" onclick="openRecTab(event, '{{ category }}')">{{ category }}</button>
-        {% endfor %}
-    </div>
+    
 
     {% for category, events in recommended_events.items() %}
-    <div id="{{ category }}" class="rec-tab-content {% if loop.first %}active{% endif %}">
-        <div class="rec-event-grid">
-            {% for event in events %}
-            <div class="rec-event-card">
+    {% if events %}
+    <h3>{{ category }}</h3>
+    <div class="rec-event-grid">
+        {% for event in events %}
+        <div class="rec-event-card">
+            <div class="rec-event-image-container">
+                <img src="{{ event.image }}" alt="{{ event.name }}" class="rec-event-image">
+            </div>
+            <div class="rec-event-content">
                 <p class="rec-event-title">{{ event.name }}</p>
                 <p class="rec-event-info">{{ event.date }} &bull; {{ event.location }}</p>
                 <div class="rec-card-footer">
                     <span class="rec-event-price">{{ event.price }}</span>
-                    <button class="btn-icon">Book Now</button>
+                    <button class="btn-book-now">Book Now</button>
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
     </div>
+    {% endif %}
     {% endfor %}
 </section>
 {% endblock %}
@@ -81,17 +83,6 @@
         el.textContent = date.toLocaleString('en-US', { weekday: 'long', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
     });
 
-    // Recommended Events Tab functionality
-    function openRecTab(evt, tabName) {
-        document.querySelectorAll('.rec-tab-content').forEach(tab => tab.style.display = "none");
-        document.querySelectorAll('.rec-tab-button').forEach(btn => btn.classList.remove('active'));
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.classList.add('active');
-    }
-    document.addEventListener("DOMContentLoaded", () => {
-        if (document.querySelector('.rec-tab-button')) {
-             document.querySelector('.rec-tab-button').click();
-        }
-    });
+    
 </script>
 {% endblock %}

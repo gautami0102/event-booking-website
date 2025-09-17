@@ -31,7 +31,7 @@
 
             <div id="price-display" style="display: none;">
                 <h2>Estimated Amount</h2>
-                <p class="calculated-amount">$0.00</p>
+                <p class="calculated-amount">₹0.00</p>
                 <p class="price-note">This is a preliminary estimate. A detailed quote will be provided after consultation.</p>
             </div>
         </div>
@@ -53,7 +53,7 @@
                 const priceDisplay = document.getElementById('price-display');
                 const amountElement = priceDisplay.querySelector('.calculated-amount');
                 
-                amountElement.innerText = '$' + finalPrice.toFixed(2);
+                amountElement.innerText = '₹' + finalPrice.toFixed(2);
                 priceDisplay.style.display = 'block';
             }
         });

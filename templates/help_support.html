@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block title %}Help & Support{% endblock %}
+
+{% block header_title %}Help & Support{% endblock %}
+{% block header_subtitle %}Find answers, contact us, or raise a ticket{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="help-search">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search help (e.g., 'How to cancel a ticket?')" aria-label="Search help" />
+    </div>
+</section>
+
+<section class="panel">
+    <h2>FAQs</h2>
+    <div class="faq-grid">
+        <details>
+            <summary>How to book an event</summary>
+            <p>Browse events on the dashboard, open an event, and click "Book Now". Complete payment to confirm.</p>
+        </details>
+        <details>
+            <summary>How to cancel/refund a ticket</summary>
+            <p>Go to <strong>My Bookings</strong>, open the booking, and choose <strong>Cancel</strong>. Refunds follow our Refund Policy.</p>
+        </details>
+        <details>
+            <summary>Payment issues (failed or duplicate charges)</summary>
+            <p>Wait a few minutes and check your bank statement. If charged but booking failed, contact support with transaction ID.</p>
+        </details>
+        <details>
+            <summary>Account & login help</summary>
+            <p>Use the "Forgot password" link on login. For account lockouts, contact support.</p>
+        </details>
+        <details>
+            <summary>Event organizer support (for hosts)</summary>
+            <p>Visit the Organizer Dashboard or reach us via email for onboarding and payouts.</p>
+        </details>
+        <details>
+            <summary>Venue/location queries</summary>
+            <p>Check the event details page for address, map links, and parking info.</p>
+        </details>
+        <details>
+            <summary>Discounts, coupons, and offers</summary>
+            <p>Apply promo codes at checkout. See Wallet/Rewards for available offers.</p>
+        </details>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Live Chat / Chatbot</h2>
+    <div class="chatbot">
+        <div class="chat-window" id="chatWindow" aria-live="polite">
+            <div class="msg bot">Hi! I can help with bookings, refunds, and account issues. Ask me anything.</div>
+        </div>
+        <form class="chat-input" id="chatForm">
+            <input type="text" id="chatText" placeholder="Type your message..." autocomplete="off" aria-label="Chat message" />
+            <button type="submit" class="btn-book-now">Send</button>
+        </form>
+        <button class="btn-secondary" id="escalateBtn">Contact Live Support</button>
+    </div>
+    <div class="contact-options">
+        <div>
+            <h3>Contact Support</h3>
+            <ul>
+                <li>📧 Email: support@example.com</li>
+                <li>📞 Phone: +1 (555) 123-4567</li>
+                <li>💬 WhatsApp: +1 (555) 765-4321</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Submit a Ticket / Complaint</h2>
+    <form class="ticket-form" method="post" action="#">
+        <div class="form-grid">
+            <label>
+                <span>Issue Type</span>
+                <select required>
+                    <option value="">Select an issue</option>
+                    <option>Booking</option>
+                    <option>Payment</option>
+                    <option>Account</option>
+                    <option>Organizer</option>
+                    <option>Other</option>
+                </select>
+            </label>
+            <label>
+                <span>Email</span>
+                <input type="email" placeholder="you@example.com" required />
+            </label>
+            <label class="full">
+                <span>Description</span>
+                <textarea rows="4" placeholder="Describe the issue" required></textarea>
+            </label>
+            <label class="full">
+                <span>Attachments</span>
+                <input type="file" multiple />
+            </label>
+        </div>
+        <button class="btn-book-now" type="submit" disabled>Submit Ticket (demo)</button>
+        <p class="muted">Demo placeholder — tracking will appear here once implemented.</p>
+    </form>
+</section>
+
+<section class="panel">
+    <h2>Guides & Tutorials</h2>
+    <ul class="guides-list">
+        <li>Booking your first event — quick guide</li>
+        <li>Managing bookings and refunds</li>
+        <li>Organizer onboarding and best practices</li>
+        <li>Payment methods and troubleshooting</li>
+    </ul>
+    <h2>Community Forum (Optional)</h2>
+    <p>Join discussions, ask questions, and share tips with the community. (Coming soon)</p>
+</section>
+
+<section class="panel">
+    <h2>Policy Links</h2>
+    <ul class="policy-links">
+        <li><a href="#">Refund & Cancellation Policy</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+    </ul>
+    <p class="muted">These links are placeholders and can be wired to real pages later.</p>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Simple chatbot logic (client-only demo)
+    (function(){
+        const chatForm = document.getElementById('chatForm');
+        const chatText = document.getElementById('chatText');
+        const chatWindow = document.getElementById('chatWindow');
+        const escalateBtn = document.getElementById('escalateBtn');
+        if (!chatForm) return;
+        function addMsg(text, role){
+            const div = document.createElement('div');
+            div.className = `msg ${role}`;
+            div.textContent = text;
+            chatWindow.appendChild(div);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+        function botReply(user){
+            const q = user.toLowerCase();
+            if (q.includes('refund') || q.includes('cancel')) {
+                return 'To request a refund, go to My Bookings > select booking > Cancel. Refunds follow our policy.';
+            }
+            if (q.includes('book') || q.includes('ticket')) {
+                return 'Open an event and click Book Now. Complete the payment to confirm your ticket.';
+            }
+            if (q.includes('payment') || q.includes('failed') || q.includes('charge')) {
+                return 'For payment issues, wait a few minutes and check your statement. If charged but booking failed, contact support with the transaction ID.';
+            }
+            if (q.includes('login') || q.includes('password')) {
+                return 'Use Forgot Password on the login page. For lockouts, contact support.';
+            }
+            if (q.includes('support') || q.includes('agent')) {
+                return 'Click "Contact Live Support" and we will connect you shortly.';
+            }
+            return 'I did not fully get that. You can ask about booking, refunds, payments, or type "support" to contact a live agent.';
+        }
+        chatForm.addEventListener('submit', async function(e){
+            e.preventDefault();
+            const msg = chatText.value.trim();
+            if (!msg) return;
+            addMsg(msg, 'user');
+            chatText.value = '';
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: msg })
+                });
+                const data = await res.json();
+                addMsg(data.reply || 'Sorry, no response.', 'bot');
+            } catch (err) {
+                addMsg('There was a problem contacting support. Please try again.', 'bot');
+            }
+        });
+        escalateBtn?.addEventListener('click', function(){
+            if (window.fcWidget && typeof window.fcWidget.open === 'function') {
+                window.fcWidget.open();
+            } else {
+                addMsg('Connecting you to a support agent... Please wait.', 'bot');
+            }
+        });
+    })();
+</script>
+<script>
+    // Freshchat Web Messenger integration (replace token before using)
+    (function(d, w, c) {
+        w.Freshchat = w.Freshchat || function() {
+            (w.Freshchat.q = w.Freshchat.q || []).push(arguments);
+        };
+        var s = d.createElement('script'); s.async = true; s.src = 'https://wchat.in.freshchat.com/js/widget.js';
+        s.onload = function() {
+            w.Freshchat('init', {
+                token: 'YOUR_FRESHCHAT_TOKEN_HERE',
+                host: 'https://wchat.in.freshchat.com',
+                config: {
+                    headerProperty: { hideChatButtonOnLoad: false },
+                    cssNames: { widget: 'fc_frame', expanded: 'fc_expanded' }
+                }
+            });
+        };
+        var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+    })(document, window);
+</script>
+{% endblock %}
