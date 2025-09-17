@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">EventBook</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">Organizers</a></li>
+            </ul>
+            <div class="auth-links">
+                <a href="/login" class="btn btn-secondary">Login</a>
+                <a href="#" class="btn btn-primary-outline">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Find Your Next Experience</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for events, artists, or venues">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </section>
+
+        <section class="event-grid">
+            <h2>Featured Events</h2>
+            <div class="event-cards">
+                {% for event in events %}
+                <div class="card">
+                    <img src="{{ event.image }}" alt="{{ event.title }}">
+                    <div class="card-content">
+                        <h3>{{ event.title }}</h3>
+                        <p class="event-date">{{ event.date }}</p>
+                        <p class="event-location">{{ event.location }}</p>
+                        <div class="card-footer">
+                            <span class="event-price">{{ event.price }}</span>
+                            <a href="/event/{{ event.id }}" class="btn btn-primary-outline">Details</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 EventBook. All rights reserved.</p>
+    </footer>
+</body>
+</html>

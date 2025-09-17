@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizer Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">EventBook</div>
+            <div class="nav-actions">
+                <button id="profile-toggle-btn" class="btn btn-primary-outline">Profile</button>
+                <a href="/" class="btn btn-secondary">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Left Column: Profile and Bookings (Now a Sidebar) -->
+    <aside id="profile-sidebar" class="profile-column">
+        <!-- Profile Section -->
+        <div class="profile-card">
+            <img src="{{ user.profile_pic }}" alt="Profile Picture" class="profile-pic">
+            <h2>{{ user.name }}</h2>
+            <p>{{ user.email }}</p>
+            <hr>
+            <div class="profile-details">
+                <p><strong>Age:</strong> {{ user.age }}</p>
+                <p><strong>Address:</strong> {{ user.address }}</p>
+            </div>
+        </div>
+
+        <!-- Bookings Section -->
+        <div class="bookings-card">
+            <h3>My Bookings</h3>
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'Future')">Future</button>
+                <button class="tab-button" onclick="openTab(event, 'Pending')">Pending</button>
+                <button class="tab-button" onclick="openTab(event, 'Past')">Past</button>
+            </div>
+
+            <div id="Future" class="tab-content active">
+                {% for booking in future_bookings %}
+                <div class="booking-item">
+                    <p class="booking-title">{{ booking.event_name }}</p>
+                    <p class="booking-date">{{ booking.date }}</p>
+                </div>
+                {% else %}
+                <p>No upcoming bookings.</p>
+                {% endfor %}
+            </div>
+
+            <div id="Pending" class="tab-content">
+                {% for booking in pending_bookings %}
+                <div class="booking-item">
+                    <p class="booking-title">{{ booking.event_name }}</p>
+                    <p class="booking-date">{{ booking.date }}</p>
+                </div>
+                {% else %}
+                <p>No pending bookings.</p>
+                {% endfor %}
+            </div>
+
+            <div id="Past" class="tab-content">
+                {% for booking in past_bookings %}
+                <div class="booking-item past-booking">
+                    <p class="booking-title">{{ booking.event_name }}</p>
+                    <p class="booking-date">{{ booking.date }}</p>
+                </div>
+                {% else %}
+                <p>No past bookings.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content: Event Categories -->
+    <main id="main-content" class="categories-column">
+        <h1>Create a New Event</h1>
+        <p>Select a category to begin setting up your next event.</p>
+        <div class="category-grid">
+            {% for category in categories %}
+            <a href="/organize/{{ category.name }}" class="category-card">
+                <img src="{{ category.image }}" alt="{{ category.name }}">
+                <div class="category-card-title">{{ category.name }}</div>
+            </a>
+            {% endfor %}
+        </div>
+    </main>
+
+    <script>
+        // Tab functionality
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        document.addEventListener("DOMContentLoaded", function(){
+            document.getElementsByClassName('tab-button')[0].click();
+        });
+
+        // Sidebar toggle functionality
+        const profileToggleBtn = document.getElementById('profile-toggle-btn');
+        const profileSidebar = document.getElementById('profile-sidebar');
+        const mainContent = document.getElementById('main-content');
+
+        profileToggleBtn.addEventListener('click', function() {
+            profileSidebar.classList.toggle('visible');
+            mainContent.classList.toggle('shifted');
+        });
+    </script>
+</body>
+</html>

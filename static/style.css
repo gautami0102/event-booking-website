@@ -1,0 +1,281 @@
+/* General Body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Header and Navigation */
+header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1200; /* Ensure header is above sidebar */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-primary-outline {
+    background-color: transparent;
+    color: #007bff;
+    border: 1px solid #007bff;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: #333;
+    color: white;
+    margin-top: 2rem;
+}
+
+/* Login Page Specific */
+.login-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* --- Sidebar Dashboard Styles --- */
+
+#profile-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 350px;
+    background-color: #fff;
+    z-index: 1100;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    overflow-y: auto;
+    padding-top: 80px; /* Space for the fixed header */
+    box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+}
+
+#profile-sidebar.visible {
+    transform: translateX(0);
+}
+
+#main-content {
+    padding: 2rem;
+    transition: margin-left 0.3s ease-in-out;
+    margin-left: 0;
+}
+
+#main-content.shifted {
+    margin-left: 350px;
+}
+
+.profile-card, .bookings-card {
+    padding: 1.5rem;
+    margin: 0 1rem 2rem 1rem;
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1rem;
+    display: block;
+    border: 3px solid #007bff;
+}
+
+.profile-card h2 {
+    text-align: center;
+    margin: 0 0 0.5rem;
+}
+
+.profile-card p {
+    text-align: center;
+    color: #6c757d;
+    margin: 0;
+}
+
+.profile-card hr {
+    border: 0;
+    height: 1px;
+    background-color: #eee;
+    margin: 1.5rem 0;
+}
+
+.profile-details p {
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+.bookings-card h3 {
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    padding: 0.75rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #6c757d;
+    border-bottom: 3px solid transparent;
+    width: 100%;
+}
+
+.tab-button.active {
+    color: #007bff;
+    border-bottom-color: #007bff;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.booking-item {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+.booking-item:last-child {
+    border-bottom: none;
+}
+
+.booking-title {
+    font-weight: bold;
+    margin: 0 0 0.25rem;
+}
+
+.booking-date {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+.past-booking {
+    opacity: 0.7;
+}
+
+.categories-column h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.categories-column p {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.category-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    color: white;
+    text-decoration: none;
+    display: block;
+    height: 200px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.category-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6);
+}
+
+.category-card-title {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Organize Page */
+.organize-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.organize-box {
+    background-color: #fff;
+    padding: 2rem 3rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: left;
+}

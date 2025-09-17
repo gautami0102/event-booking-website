@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organize: {{ category.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">EventBook</div>
+            <ul class="nav-links">
+                <li><a href="/dashboard">Dashboard</a></li>
+            </ul>
+            <div class="auth-links">
+                <a href="/" class="btn btn-secondary">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="organize-container">
+        <h1>Organize a "{{ category.name }}" Event</h1>
+        <p>Select a date to see the estimated cost.</p>
+
+        <div class="organize-box">
+            <div class="input-group">
+                <label for="event-date">Choose a date for your event:</label>
+                <input type="date" id="event-date">
+            </div>
+
+            <div id="price-display" style="display: none;">
+                <h2>Estimated Amount</h2>
+                <p class="calculated-amount">$0.00</p>
+                <p class="price-note">This is a preliminary estimate. A detailed quote will be provided after consultation.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 EventBook. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('event-date').addEventListener('change', function() {
+            const basePrice = {{ category.base_price }};
+            const date = this.value;
+
+            if (date) {
+                // Simple placeholder logic: add 10% to the base price
+                const finalPrice = basePrice * 1.10;
+                
+                const priceDisplay = document.getElementById('price-display');
+                const amountElement = priceDisplay.querySelector('.calculated-amount');
+                
+                amountElement.innerText = '$' + finalPrice.toFixed(2);
+                priceDisplay.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

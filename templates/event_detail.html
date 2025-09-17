@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ event.title }} - Event Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">EventBook</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">Organizers</a></li>
+            </ul>
+            <div class="auth-links">
+                <a href="/login" class="btn btn-secondary">Login</a>
+                <a href="#" class="btn btn-primary-outline">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="event-detail-container">
+        <div class="event-header">
+            <img src="{{ event.image }}" alt="{{ event.title }}" class="event-banner-image">
+            <div class="event-header-content">
+                <h1>{{ event.title }}</h1>
+                <p class="event-organizer">by {{ event.organizer }}</p>
+            </div>
+        </div>
+
+        <div class="event-body">
+            <div class="event-info">
+                <h2>About this Event</h2>
+                <p>{{ event.description }}</p>
+                
+                <h2>Date and Time</h2>
+                <p>{{ event.date }}</p>
+                <p>{{ event.time }}</p>
+
+                <h2>Location</h2>
+                <p>{{ event.location }}</p>
+                <div class="map-placeholder">
+                    <p>[ Google Maps Integration Placeholder ]</p>
+                </div>
+            </div>
+            <div class="ticket-box">
+                <div class="ticket-price">{{ event.price }}</div>
+                <button class="btn btn-primary">Book Tickets</button>
+                <div class="share-options">
+                    <p>Share this event:</p>
+                    <!-- Add social media share icons here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 EventBook. All rights reserved.</p>
+    </footer>
+</body>
+</html>

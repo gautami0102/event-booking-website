@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Event Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="/login" method="post">
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <div class="social-login">
+            <p>or continue with</p>
+            <div class="social-buttons">
+                <button class="btn btn-google">
+                    <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google logo"/> Google
+                </button>
+                <button class="btn btn-apple">
+                    <img src="https://img.icons8.com/ios-filled/16/000000/mac-os.png" alt="Apple logo"/> Apple
+                </button>
+            </div>
+        </div>
+        <div class="signup-link">
+            <p>Don't have an account? <a href="#">Sign up</a></p>
+        </div>
+    </div>
+</body>
+</html>
