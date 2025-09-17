@@ -47,29 +47,7 @@
     </div>
 </section>
 
-<section class="panel">
-    <h2>Live Chat / Chatbot</h2>
-    <div class="chatbot">
-        <div class="chat-window" id="chatWindow" aria-live="polite">
-            <div class="msg bot">Hi! I can help with bookings, refunds, and account issues. Ask me anything.</div>
-        </div>
-        <form class="chat-input" id="chatForm">
-            <input type="text" id="chatText" placeholder="Type your message..." autocomplete="off" aria-label="Chat message" />
-            <button type="submit" class="btn-book-now">Send</button>
-        </form>
-        <button class="btn-secondary" id="escalateBtn">Contact Live Support</button>
-    </div>
-    <div class="contact-options">
-        <div>
-            <h3>Contact Support</h3>
-            <ul>
-                <li>📧 Email: support@example.com</li>
-                <li>📞 Phone: +1 (555) 123-4567</li>
-                <li>💬 WhatsApp: +1 (555) 765-4321</li>
-            </ul>
-        </div>
-    </div>
-</section>
+
 
 <section class="panel">
     <h2>Submit a Ticket / Complaint</h2>
@@ -127,86 +105,4 @@
     </section>
 {% endblock %}
 
-{% block scripts %}
-<script>
-    // Simple chatbot logic (client-only demo)
-    (function(){
-        const chatForm = document.getElementById('chatForm');
-        const chatText = document.getElementById('chatText');
-        const chatWindow = document.getElementById('chatWindow');
-        const escalateBtn = document.getElementById('escalateBtn');
-        if (!chatForm) return;
-        function addMsg(text, role){
-            const div = document.createElement('div');
-            div.className = `msg ${role}`;
-            div.textContent = text;
-            chatWindow.appendChild(div);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-        }
-        function botReply(user){
-            const q = user.toLowerCase();
-            if (q.includes('refund') || q.includes('cancel')) {
-                return 'To request a refund, go to My Bookings > select booking > Cancel. Refunds follow our policy.';
-            }
-            if (q.includes('book') || q.includes('ticket')) {
-                return 'Open an event and click Book Now. Complete the payment to confirm your ticket.';
-            }
-            if (q.includes('payment') || q.includes('failed') || q.includes('charge')) {
-                return 'For payment issues, wait a few minutes and check your statement. If charged but booking failed, contact support with the transaction ID.';
-            }
-            if (q.includes('login') || q.includes('password')) {
-                return 'Use Forgot Password on the login page. For lockouts, contact support.';
-            }
-            if (q.includes('support') || q.includes('agent')) {
-                return 'Click "Contact Live Support" and we will connect you shortly.';
-            }
-            return 'I did not fully get that. You can ask about booking, refunds, payments, or type "support" to contact a live agent.';
-        }
-        chatForm.addEventListener('submit', async function(e){
-            e.preventDefault();
-            const msg = chatText.value.trim();
-            if (!msg) return;
-            addMsg(msg, 'user');
-            chatText.value = '';
-            try {
-                const res = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: msg })
-                });
-                const data = await res.json();
-                addMsg(data.reply || 'Sorry, no response.', 'bot');
-            } catch (err) {
-                addMsg('There was a problem contacting support. Please try again.', 'bot');
-            }
-        });
-        escalateBtn?.addEventListener('click', function(){
-            if (window.fcWidget && typeof window.fcWidget.open === 'function') {
-                window.fcWidget.open();
-            } else {
-                addMsg('Connecting you to a support agent... Please wait.', 'bot');
-            }
-        });
-    })();
-</script>
-<script>
-    // Freshchat Web Messenger integration (replace token before using)
-    (function(d, w, c) {
-        w.Freshchat = w.Freshchat || function() {
-            (w.Freshchat.q = w.Freshchat.q || []).push(arguments);
-        };
-        var s = d.createElement('script'); s.async = true; s.src = 'https://wchat.in.freshchat.com/js/widget.js';
-        s.onload = function() {
-            w.Freshchat('init', {
-                token: 'YOUR_FRESHCHAT_TOKEN_HERE',
-                host: 'https://wchat.in.freshchat.com',
-                config: {
-                    headerProperty: { hideChatButtonOnLoad: false },
-                    cssNames: { widget: 'fc_frame', expanded: 'fc_expanded' }
-                }
-            });
-        };
-        var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
-    })(document, window);
-</script>
-{% endblock %}
+

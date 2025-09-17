@@ -1,0 +1,5 @@
+- [x] Add chatbot HTML structure to base.html before closing body
+- [x] Add chatbot CSS styles to static/style.css
+- [x] Add chatbot JavaScript to base.html scripts block, integrating with /api/chat API
+- [x] Remove old chatbot section from help_support.html
+- [x] Test chatbot toggle, message sending, and AI responses on the website

@@ -50,6 +50,106 @@
             </main>
         </div>
     </div>
+    <div id="chatbot-wrapper">
+        <div id="chatbot-toggle" tabindex="0" role="button" aria-label="Toggle chatbot">
+            <i class="fas fa-comments"></i> Chat
+        </div>
+        <div id="chatbot-box" aria-live="polite" aria-atomic="false" aria-relevant="additions">
+            <div class="chat-header">
+                <span>EventBook Assistant</span>
+                <button id="chatbot-close" type="button" aria-label="Close chatbot">×</button>
+            </div>
+            <div class="chat-body" id="chatbot-body" role="log" aria-live="polite" aria-relevant="additions">
+                <p>Hello! How can I help you with your event bookings?</p>
+            </div>
+            <div class="chat-footer">
+                <input type="text" id="chatbot-input" placeholder="Type your message..." autocomplete="off" aria-label="Chat message" />
+                <button id="chatbot-send" type="button" aria-label="Send message">Send</button>
+            </div>
+        </div>
+    </div>
+    <style>
+        #chatbot-wrapper {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 10000;
+            font-family: Arial, sans-serif;
+        }
+        #chatbot-toggle {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+        #chatbot-box {
+            display: none;
+            width: 300px;
+            height: 400px;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            flex-direction: column;
+            display: flex;
+        }
+        #chatbot-wrapper.open #chatbot-box {
+            display: flex;
+        }
+        .chat-header, .chat-footer {
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-body {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        .chat-footer {
+            display: flex;
+        }
+        .chat-footer input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .chat-footer button {
+            padding: 8px 12px;
+            margin-left: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .msg {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .msg.user {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+        }
+        .msg.bot {
+            background-color: #f1f1f1;
+            color: black;
+            align-self: flex-start;
+        }
+    </style>
     {% block scripts %}{% endblock %}
     <script>
         (function() {
@@ -74,6 +174,70 @@
                 } else if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     notif.click();
+                }
+            });
+        })();
+    </script>
+    <script>
+        (function(){
+            const wrapper = document.getElementById('chatbot-wrapper');
+            const toggle = document.getElementById('chatbot-toggle');
+            const closeBtn = document.getElementById('chatbot-close');
+            const chatBody = document.getElementById('chatbot-body');
+            const input = document.getElementById('chatbot-input');
+            const sendBtn = document.getElementById('chatbot-send');
+
+            function addMsg(text, role){
+                const div = document.createElement('div');
+                div.className = `msg ${role}`;
+                div.textContent = text;
+                chatBody.appendChild(div);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+
+            toggle.addEventListener('click', () => {
+                if(!wrapper.classList.contains('open')){
+                    wrapper.classList.add('open');
+                    input.focus();
+                }
+            });
+            toggle.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter' || e.key === ' '){
+                    e.preventDefault();
+                    toggle.click();
+                }
+            });
+            closeBtn.addEventListener('click', () => {
+                wrapper.classList.remove('open');
+            });
+
+            async function sendMessage(){
+                const msg = input.value.trim();
+                if(!msg) return;
+                addMsg(msg, 'user');
+                input.value = '';
+                try {
+                    const res = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: msg })
+                    });
+                    if(!res.ok){
+                        addMsg('Error: ' + res.statusText, 'bot');
+                        return;
+                    }
+                    const data = await res.json();
+                    addMsg(data.reply || 'Sorry, no response.', 'bot');
+                } catch (err) {
+                    addMsg('There was a problem contacting support. Please try again.', 'bot');
+                }
+            }
+
+            sendBtn.addEventListener('click', sendMessage);
+            input.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter'){
+                    e.preventDefault();
+                    sendMessage();
                 }
             });
         })();

@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 import os
 
+os.environ['GEMINI_API_KEY'] = 'AIzaSyDUSdhK9pAB_JgL3pvJ8skgzqtFcxGJJqQ'
+
 try:
     import google.generativeai as genai
     GENAI_AVAILABLE = True
