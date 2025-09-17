@@ -109,6 +109,21 @@ body {
     color: #5f6368;
 }
 
+.top-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 1.2rem;
+    color: #5f6368;
+}
+
+.top-nav-profile-pic {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 /* --- Dashboard Panels --- */
 .panel {
     background-color: #fff;
@@ -118,7 +133,105 @@ body {
     margin-bottom: 2rem;
 }
 
-/* Booking History & Wishlist Pages */
+.panel h2 {
+    margin-top: 0;
+    font-size: 1.4rem;
+}
+
+/* Upcoming Bookings Panel */
+.booking-card {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.booking-banner {
+    width: 150px;
+    height: 100px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.booking-details {
+    flex-grow: 1;
+}
+
+.booking-details h3 {
+    margin: 0 0 0.5rem;
+}
+
+.booking-details p {
+    margin: 0.25rem 0;
+    color: #5f6368;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.countdown {
+    font-weight: 600;
+    color: #1967d2;
+    margin-top: 0.5rem;
+}
+
+.booking-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Recommended Events Panel */
+.rec-tabs {
+    display: flex;
+    gap: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 1.5rem;
+}
+
+.rec-tab-button {
+    background: none;
+    border: none;
+    padding: 0.5rem 0;
+    margin-bottom: -1px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #5f6368;
+    border-bottom: 2px solid transparent;
+}
+
+.rec-tab-button.active {
+    color: #1967d2;
+    border-bottom-color: #1967d2;
+}
+
+.rec-tab-content {
+    display: none;
+}
+
+.rec-tab-content.active {
+    display: block;
+}
+
+.rec-event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.rec-event-card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+}
+
+/* Booking History & Wishlist & Wallet Pages */
 .history-card, .wishlist-card, .promo-card {
     display: flex;
     justify-content: space-between;
@@ -144,23 +257,6 @@ body {
     gap: 0.5rem;
 }
 
-.btn-icon.review {
-    background-color: #e8f0fe;
-    color: #1967d2;
-}
-
-.btn-icon.rebook, .btn-icon.book, .btn-icon.copy-btn {
-    background-color: #1967d2;
-    color: #fff;
-}
-
-.wishlist-price {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-right: 1rem;
-}
-
-/* Wallet Page */
 .wallet-summary-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -184,16 +280,6 @@ body {
     background-color: #e8f0fe;
     padding: 1rem;
     border-radius: 50%;
-}
-
-.summary-info p {
-    margin: 0 0 0.25rem;
-    color: #5f6368;
-}
-
-.summary-info span {
-    font-size: 2rem;
-    font-weight: 600;
 }
 
 .promo-code-text {
@@ -222,4 +308,3 @@ body {
     max-width: 400px;
     text-align: center;
 }
-
