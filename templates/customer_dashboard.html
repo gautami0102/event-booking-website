@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}My Dashboard{% endblock %}
+
+{% block content %}
+<!-- Upcoming Events Panel -->
+<section class="panel upcoming-events-panel">
+    <h2>Upcoming Events & Bookings</h2>
+    <div class="bookings-list">
+        {% for booking in upcoming_bookings %}
+        <div class="booking-card">
+            <img src="{{ booking.banner_image }}" alt="{{ booking.event_name }}" class="booking-banner">
+            <div class="booking-details">
+                <h3>{{ booking.event_name }}</h3>
+                <p><i class="fas fa-calendar-alt"></i> <span class="booking-date-time" data-date="{{ booking.date }}"></span></p>
+                <p><i class="fas fa-map-marker-alt"></i> {{ booking.venue }}</p>
+                <div class="countdown" data-date="{{ booking.date }}"></div>
+            </div>
+            <div class="booking-actions">
+                <button class="btn-icon"><i class="fas fa-qrcode"></i> QR Code</button>
+                <button class="btn-icon"><i class="fas fa-calendar-plus"></i> Add to Calendar</button>
+                <button class="btn-icon cancel">Cancel</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Recommended Events Panel -->
+<section class="panel recommended-events-panel">
+    <h2>Recommended & Trending</h2>
+    <div class="rec-tabs">
+        {% for category in recommended_events.keys() %}
+        <button class="rec-tab-button {% if loop.first %}active{% endif %}" onclick="openRecTab(event, '{{ category }}')">{{ category }}</button>
+        {% endfor %}
+    </div>
+
+    {% for category, events in recommended_events.items() %}
+    <div id="{{ category }}" class="rec-tab-content {% if loop.first %}active{% endif %}">
+        <div class="rec-event-grid">
+            {% for event in events %}
+            <div class="rec-event-card">
+                <p class="rec-event-title">{{ event.name }}</p>
+                <p class="rec-event-info">{{ event.date }} &bull; {{ event.location }}</p>
+                <div class="rec-card-footer">
+                    <span class="rec-event-price">{{ event.price }}</span>
+                    <button class="btn-icon">Book Now</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Countdown Timer Logic
+    document.querySelectorAll('.countdown').forEach(timer => {
+        const targetDate = new Date(timer.dataset.date).getTime();
+        const interval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            if (distance < 0) {
+                clearInterval(interval);
+                timer.innerHTML = "Event has started!";
+                return;
+            }
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+            timer.innerHTML = `<span>${d}d</span> : <span>${h}h</span> : <span>${m}m</span> : <span>${s}s</span>`;
+        }, 1000);
+    });
+
+    // Date & Time Formatting
+    document.querySelectorAll('.booking-date-time').forEach(el => {
+        const date = new Date(el.dataset.date);
+        el.textContent = date.toLocaleString('en-US', { weekday: 'long', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    });
+
+    // Recommended Events Tab functionality
+    function openRecTab(evt, tabName) {
+        document.querySelectorAll('.rec-tab-content').forEach(tab => tab.style.display = "none");
+        document.querySelectorAll('.rec-tab-button').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.classList.add('active');
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+        if (document.querySelector('.rec-tab-button')) {
+             document.querySelector('.rec-tab-button').click();
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}My Wishlist{% endblock %}
+
+{% block header_title %}My Wishlist{% endblock %}
+{% block header_subtitle %}Events you've saved for later.{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="wishlist-list">
+        {% for event in events %}
+        <div class="wishlist-card">
+            <div class="wishlist-details">
+                <h3>{{ event.name }}</h3>
+                <p><i class="fas fa-calendar-alt"></i> {{ event.date }}</p>
+                <p><i class="fas fa-map-marker-alt"></i> {{ event.location }}</p>
+            </div>
+            <div class="wishlist-actions">
+                <span class="wishlist-price">{{ event.price }}</span>
+                <button class="btn-icon book">Book Now</button>
+            </div>
+        </div>
+        {% else %}
+        <p>Your wishlist is empty.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}My Bookings{% endblock %}
+
+{% block header_title %}My Booking History{% endblock %}
+{% block header_subtitle %}A record of all your past events.{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="history-list">
+        {% for booking in bookings %}
+        <div class="history-card">
+            <div class="history-details">
+                <h3>{{ booking.name }}</h3>
+                <p><i class="fas fa-calendar-alt"></i> {{ booking.date }}</p>
+                <p><i class="fas fa-map-marker-alt"></i> {{ booking.location }}</p>
+            </div>
+            <div class="history-actions">
+                {% if booking.review_pending %}
+                <button class="btn-icon review">Write a Review</button>
+                {% else %}
+                <button class="btn-icon rebook">Book Again</button>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <p>You have no past bookings.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

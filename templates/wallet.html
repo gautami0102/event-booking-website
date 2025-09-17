@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}My Wallet & Rewards{% endblock %}
+
+{% block header_title %}My Wallet & Rewards{% endblock %}
+{% block header_subtitle %}Your balance, points, and available offers.{% endblock %}
+
+{% block content %}
+<!-- Wallet Summary Cards -->
+<div class="wallet-summary-grid">
+    <div class="summary-card">
+        <i class="fas fa-wallet"></i>
+        <div class="summary-info">
+            <p>Wallet Balance</p>
+            <span>${{ '%.2f'|format(wallet.balance) }}</span>
+        </div>
+    </div>
+    <div class="summary-card">
+        <i class="fas fa-star"></i>
+        <div class="summary-info">
+            <p>Loyalty Points</p>
+            <span>{{ wallet.points }}</span>
+        </div>
+    </div>
+</div>
+
+<!-- Promo Codes Panel -->
+<section class="panel">
+    <h2>Available Promo Codes</h2>
+    <div class="promo-code-list">
+        {% for promo in wallet.promo_codes %}
+        <div class="promo-card">
+            <div class="promo-details">
+                <h3 class="promo-code-text">{{ promo.code }}</h3>
+                <p>{{ promo.description }}</p>
+            </div>
+            <button class="btn-icon copy-btn">Copy Code</button>
+        </div>
+        {% else %}
+        <p>You have no available promo codes at the moment.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
