@@ -57,7 +57,7 @@
         <div id="chatbot-box" aria-live="polite" aria-atomic="false" aria-relevant="additions">
             <div class="chat-header">
                 <span>EventBook Assistant</span>
-                <button id="chatbot-close" type="button" aria-label="Close chatbot">×</button>
+                <button id="chatbot-close" type="button" aria-label="Close chatbot"><i class="fas fa-times"></i></button>
             </div>
             <div class="chat-body" id="chatbot-body" role="log" aria-live="polite" aria-relevant="additions">
                 <p>Hello! How can I help you with your event bookings?</p>
@@ -85,7 +85,6 @@
             user-select: none;
         }
         #chatbot-box {
-            display: none;
             width: 300px;
             height: 400px;
             background-color: white;
@@ -96,6 +95,19 @@
             overflow: hidden;
             flex-direction: column;
             display: flex;
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+        #chatbot-wrapper:not(.open) #chatbot-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        #chatbot-wrapper:not(.open) #chatbot-box .chat-header span,
+        #chatbot-wrapper:not(.open) #chatbot-box .chat-body,
+        #chatbot-wrapper:not(.open) #chatbot-box .chat-footer {
+            display: none;
         }
         #chatbot-wrapper.open #chatbot-box {
             display: flex;
@@ -199,6 +211,9 @@
                 if(!wrapper.classList.contains('open')){
                     wrapper.classList.add('open');
                     input.focus();
+                    const icon = document.querySelector('#chatbot-close i');
+                    icon.className = 'fas fa-times';
+                    document.getElementById('chatbot-close').setAttribute('aria-label', 'Close chatbot');
                 }
             });
             toggle.addEventListener('keydown', (e) => {
@@ -208,7 +223,16 @@
                 }
             });
             closeBtn.addEventListener('click', () => {
-                wrapper.classList.remove('open');
+                const icon = closeBtn.querySelector('i');
+                if (wrapper.classList.contains('open')) {
+                    wrapper.classList.remove('open');
+                    icon.className = 'fas fa-circle';
+                    closeBtn.setAttribute('aria-label', 'Open chatbot');
+                } else {
+                    wrapper.classList.add('open');
+                    icon.className = 'fas fa-times';
+                    closeBtn.setAttribute('aria-label', 'Close chatbot');
+                }
             });
 
             async function sendMessage(){
